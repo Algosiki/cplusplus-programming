@@ -120,7 +120,7 @@ public:
     }
 
     iter end() const {
-        return iter(_data + buff_capacity);
+        return iter(_data + buff_size + 1);
     }
 
     // Constructors and destructor
@@ -186,17 +186,18 @@ public:
     void delete_by_it(iter el)
     {
 
-        while (el != finish) {
-            _data[el] = _data[el + 1];
+        while (el != iter(finish)) {
+            el[0] = el[1];
 
-            if (el + 1 == finish) {
+            if (el + 1 == iter(finish)) {
                 break;
             }
 
-            ++el;
+            //++el;
         }
 
         --buff_size;
+        --buff_capacity;
     }
 
     // Getting first and last elements
@@ -225,12 +226,13 @@ public:
         CircularBuffer newBuff(cap);
         T* new_start = start;
 
-        while (new_start != finish) {
+        while (new_start != finish + 1) {
             newBuff.add_start(*new_start);
             ++new_start;
         }
 
         newBuff.buff_size = buff_size;
+        newBuff.ptr_start = newBuff.start;
 
         return newBuff;
     }
