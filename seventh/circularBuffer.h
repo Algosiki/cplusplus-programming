@@ -120,7 +120,7 @@ public:
     }
 
     iter end() const {
-        return iter(_data + buff_size + 1);
+        return iter(_data + buff_size + 1 + 1); // + 1, because end() points to the element after last one
     }
 
     // Constructors and destructor
